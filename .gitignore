@@ -1,0 +1,7 @@
+bin
+obj
+publish
+packages
+
+.vs
+.idea

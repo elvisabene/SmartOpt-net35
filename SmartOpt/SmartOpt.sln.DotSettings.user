@@ -1,0 +1,12 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1a3018a5_002D2640_002D47de_002D833d_002D255051ec45d2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreatePatternLayoutsFromOrders_WhenNothingSpecialHappens_ReturnsResult" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::33C5000D-806D-4B70-84A4-6D176F10709F::.NETFramework,Version=v3.5::SmartOpt.Modules.PatternLayoutsGenerator.Tests.PatternLayoutServiceTests.CreatePatternLayoutsFromOrders_WhenNothingSpecialHappens_ReturnsResult&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=48004390_002D8502_002D4d5a_002Daf34_002Da9ef0ee42d64/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="PatternLayoutServiceTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::33C5000D-806D-4B70-84A4-6D176F10709F::.NETFramework,Version=v3.5::SmartOpt.Modules.PatternLayoutsGenerator.Tests.PatternLayoutServiceTests&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=33c5000d_002D806d_002D4b70_002D84a4_002D6d176f10709f_0023SmartOpt_002EModules_002EPatternLayoutsGenerator_002ETests/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
