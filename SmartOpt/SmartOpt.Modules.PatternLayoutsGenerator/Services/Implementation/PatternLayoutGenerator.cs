@@ -1,4 +1,6 @@
-﻿using SmartOpt.Core.Extensions;
+﻿using System;
+using System.Collections;
+using SmartOpt.Core.Extensions;
 using SmartOpt.Modules.PatternLayoutsGenerator.Services.Abstractions.Interfaces;
 using SmartOpt.Modules.PatternLayoutsGenerator.Services.Abstractions.Models;
 using System.Collections.Generic;
@@ -38,7 +40,8 @@ namespace SmartOpt.Modules.PatternLayoutsGenerator.Services.Implementation
                         ungroupedOrders,
                         ordersGroup,
                         minWaste, maxWaste, maxWidth,
-                        out var patternLayout, out elementsForGroupingExist))
+                        out var patternLayout,
+                        out elementsForGroupingExist))
                 {
                     allOrders = MergeSplitOrders(allOrders);
                     AddPatternLayoutToReport(report, patternLayout);
@@ -74,8 +77,19 @@ namespace SmartOpt.Modules.PatternLayoutsGenerator.Services.Implementation
 
             var groupWaste = CalculateWasteForOrdersGroup(ordersGroup, maxWidth);
             
+            var lastWasteHistory = new List<double> { groupWaste, };
+
             while (groupWaste > maxWaste || groupWaste < minWaste)
             {
+                RemoveOldWaste(lastWasteHistory);
+                
+                if (IsWasteCycle(lastWasteHistory))
+                {
+                    elementsForGroupingExist = false;
+                    
+                    return false;
+                }
+                
                 if (TryFindSuitableOrderIndexForReplacing(
                         ordersGroup,
                         unprocessedOrders,
@@ -86,6 +100,7 @@ namespace SmartOpt.Modules.PatternLayoutsGenerator.Services.Implementation
                     (ordersGroup[0], unprocessedOrders[suitableOrderForReplacingIndex]) = (unprocessedOrders[suitableOrderForReplacingIndex], ordersGroup[0]);
 
                     groupWaste = CalculateWasteForOrdersGroup(ordersGroup, maxWidth);
+                    lastWasteHistory.Add(groupWaste);
                 }
                 else
                 {
@@ -204,6 +219,19 @@ namespace SmartOpt.Modules.PatternLayoutsGenerator.Services.Implementation
                 }));
 
             return b;
+        }
+
+        private static void RemoveOldWaste(IList wasteHistory)
+        {
+            if (wasteHistory.Count == 4)
+            {
+                wasteHistory.RemoveAt(0);
+            }
+        }
+
+        private static bool IsWasteCycle(IList<double> wasteHistory)
+        {
+            return wasteHistory.Count > 2 && Math.Abs(wasteHistory[0] - wasteHistory[2]) < 0.00005;
         }
     }
 }
