@@ -53,6 +53,7 @@
     <Compile Include="Infrastructure\Interfaces\IApplication.cs" />
     <Compile Include="Infrastructure\Interfaces\IApplicationState.cs" />
     <Compile Include="Infrastructure\Interfaces\ICloneable.cs" />
+    <Compile Include="Infrastructure\Models\WidthRange.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using System.Windows.Media.Effects;
+using SmartOpt.Core.Infrastructure.Models;
 using SmartOpt.Modules.PatternLayoutsGenerator.UI.Services;
 using SmartOpt.Modules.PatternLayoutsGenerator.UI.ViewModels.Interfaces;
 
@@ -14,9 +15,17 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
     private int groupSize = 5;
     private string workbookFilepath;
 
+    private WidthRange availableWidth;
+
     public MainWindowViewModel()
     {
+        availableWidth = new WidthRange(maxWaste, minWaste, maxWidth);
         BusyIndicatorManager = BusyIndicatorManager.Instance;
+    }
+
+    public WidthRange AvailableRange
+    {
+        get => availableWidth;
     }
 
     public bool IsInteractionAllowed
@@ -79,6 +88,11 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
         }
     }
 
+    private void UpdateWidth()
+    {
+        ma
+    }
+
     public ICommand GeneratePatternLayouts { get; set; } = null!;
     public ICommand IncrementGroupSize { get; set; } = null!;
     public ICommand DecrementGroupSize { get; set; } = null!;
@@ -86,7 +100,5 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
 
     public BusyIndicatorManager BusyIndicatorManager { get; }
     
-    public Cursor Cursor { get; set; }
-
     public Effect Effect { get; set; }
 }
