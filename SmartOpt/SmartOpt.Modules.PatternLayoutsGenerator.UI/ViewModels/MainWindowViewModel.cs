@@ -19,14 +19,11 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
 
     public MainWindowViewModel()
     {
-        availableWidth = new WidthRange(maxWaste, minWaste, maxWidth);
+        availableWidth = new WidthRange(minWaste, maxWaste, maxWidth);
         BusyIndicatorManager = BusyIndicatorManager.Instance;
     }
 
-    public WidthRange AvailableRange
-    {
-        get => availableWidth;
-    }
+    public WidthRange AvailableRange => availableWidth;
 
     public bool IsInteractionAllowed
     {
@@ -45,6 +42,7 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
         {
             maxWidth = value;
             OnPropertyChanged(nameof(MaxWidth));
+            UpdateWidthRange();
         }
     }
 
@@ -55,6 +53,7 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
         {
             minWaste = value;
             OnPropertyChanged(nameof(MinWaste));
+            UpdateWidthRange();
         }
     }
 
@@ -65,6 +64,7 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
         {
             maxWaste = value;
             OnPropertyChanged(nameof(MaxWaste));
+            UpdateWidthRange();
         }
     }
 
@@ -88,9 +88,10 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
         }
     }
 
-    private void UpdateWidth()
+    private void UpdateWidthRange()
     {
-        ma
+        availableWidth.SetNewRange(minWaste, maxWaste, maxWidth);
+        OnPropertyChanged(nameof(AvailableRange));
     }
 
     public ICommand GeneratePatternLayouts { get; set; } = null!;

@@ -9,8 +9,8 @@ public class WidthRange
     
     public void SetNewRange(double minWaste, double maxWaste, double width)
     {
-        MinWidth = width - width * minWaste / 100;
-        MaxWidth = width - width * maxWaste / 100;
+        MinWidth = width - width * maxWaste / 100;
+        MaxWidth = width - width * minWaste / 100;
     }
     
     public double MinWidth { get; set; }
