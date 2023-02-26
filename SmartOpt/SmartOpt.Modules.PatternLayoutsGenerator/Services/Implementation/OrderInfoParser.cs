@@ -1,19 +1,20 @@
-﻿using System;
+﻿using ClosedXML.Excel;
+using Microsoft.Office.Interop.Excel;
+using OfficeOpenXml;
+using SmartOpt.Core.Extensions;
+using SmartOpt.Modules.PatternLayoutsGenerator.Services.Abstractions.Interfaces;
+using SmartOpt.Modules.PatternLayoutsGenerator.Services.Abstractions.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using ClosedXML.Excel;
-using Microsoft.Office.Interop.Excel;
-using SmartOpt.Modules.PatternLayoutsGenerator.Services.Abstractions.Models;
-using SmartOpt.Core.Extensions;
-using SmartOpt.Modules.PatternLayoutsGenerator.Services.Abstractions.Interfaces;
 
 namespace SmartOpt.Modules.PatternLayoutsGenerator.Services.Implementation
 {
     public class OrderInfoParser : IOrderInfoParser
     {
-        public IEnumerable<OrderInfo> ParseOrdersFromActiveExcelWorksheet()
+        public IEnumerable<OrderInfo> ParseOrdersFromActiveExcelWorksheet(double coefficient)
         {
             var excelCom = Marshal.GetActiveObject("Excel.Application");
             if (excelCom == null)
@@ -29,25 +30,29 @@ namespace SmartOpt.Modules.PatternLayoutsGenerator.Services.Implementation
             ReleaseObject(ref application);
             ReleaseObject(ref activeWorkbook);
 
-            return ParseOrdersFromExcelWorksheetInternal(workbookFilename);
+            return ParseOrdersFromExcelWorksheetInternal(workbookFilename, coefficient);
         }
 
-        public IEnumerable<OrderInfo> ParseOrdersFromExcelWorksheet(string workbookFilepath)
+        public IEnumerable<OrderInfo> ParseOrdersFromExcelWorksheet(string workbookFilepath, double coefficient)
         {
-            return ParseOrdersFromExcelWorksheetInternal(workbookFilepath);
+            return ParseOrdersFromExcelWorksheetInternal(workbookFilepath, coefficient);
         }
 
-        private IEnumerable<OrderInfo> ParseOrdersFromExcelWorksheetInternal(string workbookFilepath)
+        private IEnumerable<OrderInfo> ParseOrdersFromExcelWorksheetInternal(string workbookFilepath, double coefficient)
         {
             var tempFilepath = $"{Path.Combine(Path.GetDirectoryName(workbookFilepath), Path.GetFileNameWithoutExtension(workbookFilepath))}_temp{Path.GetExtension(workbookFilepath)}";
 
             try
             {
+                //ChangeFormula(workbookFilepath, coefficient);
+
                 File.Copy(workbookFilepath, tempFilepath, true);
 
                 using var workbook = new XLWorkbook(tempFilepath);
                 IXLWorksheet worksheet = workbook.Worksheets.First();
-
+                //var column = worksheet.Column(14);
+                //column.FormulaR1C1 = $"=(RC[-10]-RC[-9])/(RC[-1]*{coefficient})";
+                //workbook.Save();
                 var nameColumnValues = ParseColumn<string>(worksheet, 1, 3);
                 var widthColumnValues = ParseColumn<int>(worksheet, 3, 3);
                 // IReadOnlyList<int> requestKilosColumnValues = ParseColumn<int>(worksheet, 4, 3);
@@ -77,6 +82,19 @@ namespace SmartOpt.Modules.PatternLayoutsGenerator.Services.Implementation
                 }
             }
         }
+
+        //private void ChangeFormula(string filePath, double coefficient)
+        //{
+        //    FileInfo existingFile = new FileInfo(filePath);
+        //    using (ExcelPackage package = new ExcelPackage(existingFile))
+        //    {
+        //        //get the first worksheet in the workbook
+        //        ExcelWorksheet worksheet = package.Workbook.Worksheets;
+        //        var column = worksheet.Cells.Address;
+        //        column.FormulaR1C1 = $"=(RC[-10]-RC[-9])/(RC[-1]*{coefficient})";
+        //        package.Save();
+        //    }
+        //}
 
         /// <summary>
         /// Parse the values of the specified column

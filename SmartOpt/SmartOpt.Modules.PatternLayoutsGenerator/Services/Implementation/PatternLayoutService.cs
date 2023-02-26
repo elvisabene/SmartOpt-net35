@@ -17,16 +17,16 @@ namespace SmartOpt.Modules.PatternLayoutsGenerator.Services.Implementation
             this.orderInfoParser = orderInfoParser;
         }
 
-        public Report GeneratePatternLayoutsFromActiveExcelWorksheet(int maxWidth, double minWaste, double maxWaste, int groupSize)
+        public Report GeneratePatternLayoutsFromActiveExcelWorksheet(int maxWidth, double minWaste, double maxWaste, int groupSize, double coefficient)
         {
-            var orders = orderInfoParser.ParseOrdersFromActiveExcelWorksheet();
+            var orders = orderInfoParser.ParseOrdersFromActiveExcelWorksheet(coefficient);
 
             return GeneratePatternLayoutsFromExcelWorksheetInternal(orders, maxWidth, minWaste, maxWaste, groupSize);
         }
 
-        public Report GeneratePatternLayoutsFromExcelWorksheet(string workbookFilepath, int maxWidth, double minWaste, double maxWaste, int groupSize)
+        public Report GeneratePatternLayoutsFromExcelWorksheet(string workbookFilepath, int maxWidth, double minWaste, double maxWaste, int groupSize, double coefficient)
         {
-            var orders = orderInfoParser.ParseOrdersFromExcelWorksheet(workbookFilepath);
+            var orders = orderInfoParser.ParseOrdersFromExcelWorksheet(workbookFilepath, coefficient);
 
             return GeneratePatternLayoutsFromExcelWorksheetInternal(orders, maxWidth, minWaste, maxWaste, groupSize);
         }

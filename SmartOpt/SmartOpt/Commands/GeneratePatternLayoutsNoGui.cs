@@ -7,7 +7,8 @@ public partial class Application
 {
     private void GeneratePatternLayoutsNoGui(
         IPatternLayoutService patternLayoutService,
-        IReportExporter reportExporter)
+        IReportExporter reportExporter,
+        double coefficient)
     {
         Report report;
         if (_applicationState.ExcelBookFilepath != null)
@@ -17,7 +18,8 @@ public partial class Application
                 _applicationState.MaxWidth!.Value,
                 _applicationState.MinWaste!.Value,
                 _applicationState.MaxWaste!.Value,
-                _applicationState.GroupSize!.Value);
+                _applicationState.GroupSize!.Value, 
+                coefficient);
         }
         else
         {
@@ -25,7 +27,8 @@ public partial class Application
                 _applicationState.MaxWidth!.Value,
                 _applicationState.MinWaste!.Value,
                 _applicationState.MaxWaste!.Value,
-                _applicationState.GroupSize!.Value);
+                _applicationState.GroupSize!.Value,
+                coefficient);
         }
 
         reportExporter.ExportToNewExcelWorkbook(report);

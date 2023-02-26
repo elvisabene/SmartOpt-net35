@@ -16,13 +16,14 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
     private double leftLimit = 5916;
     private double rightLimit = 5952;
     private int groupSize = 5;
+    private double coefficient = 0.17;
     private string workbookFilepath;
 
     private WidthRange availableWidth;
 
     public MainWindowViewModel()
     {
-        availableWidth = new WidthRange(minWaste, maxWaste, maxWidth, rightLimit, leftLimit);
+        availableWidth = new WidthRange(minWaste, maxWaste, maxWidth, rightLimit, leftLimit, coefficient);
         BusyIndicatorManager = BusyIndicatorManager.Instance;
         
         availableWidth.OnWasteChange += () =>

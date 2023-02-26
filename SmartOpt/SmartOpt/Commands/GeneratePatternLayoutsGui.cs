@@ -1,16 +1,13 @@
-﻿using System;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media.Effects;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using SmartOpt.Modules.PatternLayoutsGenerator.Services.Abstractions.Interfaces;
 using SmartOpt.Modules.PatternLayoutsGenerator.UI.Commands;
 using SmartOpt.Modules.PatternLayoutsGenerator.UI.ViewModels;
 using SmartOpt.Modules.PatternLayoutsGenerator.UI.ViewModels.Interfaces;
 using SmartOpt.Modules.PatternLayoutsGenerator.UI.Views;
+using System;
+using System.IO;
+using System.Windows;
+using System.Windows.Media.Effects;
 
 namespace SmartOpt;
 
@@ -39,10 +36,10 @@ public partial class Application
 
                 viewModel.BusyIndicatorManager.Show(1, "Обрабатываем...");
                 viewModel.Effect = new BlurEffect();
-                
+
                 try
                 {
-                    GeneratePatternLayoutsNoGui(patternLayoutService, reportExporter);
+                    GeneratePatternLayoutsNoGui(patternLayoutService, reportExporter, viewModel.AvailableRange.Coefficient);
                 }
                 catch (Exception exception)
                 {
@@ -58,7 +55,7 @@ public partial class Application
                 }
             },
             CanExecuteGeneratePattenLayoutsCommand(viewModel));
-        
+
         viewModel.SelectWorkbookFilepath = new RelayCommand(_ =>
         {
             var dialog = new OpenFileDialog();
@@ -76,5 +73,5 @@ public partial class Application
     }
 
     private Func<object, bool> CanExecuteGeneratePattenLayoutsCommand(IMainWindowViewModel viewModel) =>
-        _ => viewModel.AvailableRange.Width >= 0 && viewModel.AvailableRange.MinWastePercent > 0 && viewModel.GroupSize > 0;
+        _ => viewModel.AvailableRange.Width >= 0 && viewModel.AvailableRange.MaxWastePercent > 0 && viewModel.GroupSize > 0;
 }

@@ -8,12 +8,22 @@ public class WidthRange
     private double maxWastePercent;
     private double leftLimit;
     private double rightLimit;
+    private double coefficient;
+
     private int width;
-    
+
     public event Action OnLimitChange;
     public event Action OnWasteChange;
-    public event Action OnWidthChange; 
-    
+    public event Action OnWidthChange;
+
+    public double Coefficient
+    {
+        get => coefficient;
+        set
+        {
+            coefficient = value;
+        }
+    }
 
     public double MinWastePercent
     {
@@ -65,13 +75,14 @@ public class WidthRange
         }
     }
 
-    public WidthRange(double minWaste, double maxWaste, int width, double rightLimit, double leftLimit)
+    public WidthRange(double minWaste, double maxWaste, int width, double rightLimit, double leftLimit, double coefficient)
     {
         minWastePercent = minWaste;
         maxWastePercent = maxWaste;
         this.leftLimit = leftLimit;
         this.rightLimit = rightLimit;
         this.width = width;
+        this.coefficient = coefficient;
         OnLimitChange += SetNewRangeForWaste;
         OnWasteChange += SetNewRangeForLimit;
         OnWidthChange += SetNewRangeForWidth;

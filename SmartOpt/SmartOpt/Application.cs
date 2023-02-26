@@ -1,9 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using SmartOpt.Core.Extensions;
 using SmartOpt.Core.Infrastructure.Enums;
 using SmartOpt.Core.Infrastructure.Interfaces;
 using SmartOpt.Modules.PatternLayoutsGenerator.Services.Abstractions.Interfaces;
+using SmartOpt.Modules.PatternLayoutsGenerator.UI.ViewModels;
 
 namespace SmartOpt
 {
@@ -20,6 +22,11 @@ namespace SmartOpt
 
         public void Start()
         {
+            var viewModel = new MainWindowViewModel
+            {
+                WorkbookFilename = Path.GetFileName(_applicationState.ExcelBookFilepath!) ?? "Активная книга"
+            };
+
             try
             {
                 switch (_applicationState)
@@ -41,7 +48,8 @@ namespace SmartOpt
                     }:
                         GeneratePatternLayoutsNoGui(
                             _provider.GetRequiredService<IPatternLayoutService>(),
-                            _provider.GetRequiredService<IReportExporter>()
+                            _provider.GetRequiredService<IReportExporter>(),
+                            viewModel.AvailableRange.Coefficient
                         );
                         break;
                     default:
