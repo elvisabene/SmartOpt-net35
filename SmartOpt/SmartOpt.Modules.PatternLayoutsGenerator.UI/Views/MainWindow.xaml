@@ -173,19 +173,20 @@
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center" Text="От:" />
-                <TextBox Grid.Column="1" Grid.ColumnSpan="2" TextAlignment="Center" Text="{Binding MinWaste}" />
-                <TextBlock Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center" Text="До:" />
-                <TextBox Grid.Column="5" Grid.ColumnSpan="2" TextAlignment="Center" Text="{Binding MaxWaste}" />
-                <Label Grid.Row="1" Grid.ColumnSpan="7" Height="70">
-                    <StackPanel>
-                        <TextBlock Text="Доступная ширина: " />
-                        <TextBlock FontSize="18" VerticalAlignment="Center" Text="{Binding AvailableRange, UpdateSourceTrigger=PropertyChanged}" />
-                    </StackPanel>
-                </Label>
-               
-            </Grid>
+                    <RowDefinition />
+                    <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="7" TextAlignment="Left" FontSize="18" VerticalAlignment="Center" Text="Допустимый процент отходов:" />
+            <TextBlock Grid.Column="0" Grid.Row="1" TextAlignment="Center" VerticalAlignment="Center" Text="От:" />
+            <TextBox Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" TextAlignment="Center" Text="{Binding Path=MinWaste, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+            <TextBlock Grid.Column="4" Grid.Row="1" TextAlignment="Center" VerticalAlignment="Center" Text="До:" />
+            <TextBox Grid.Column="5"  Grid.Row="1" Grid.ColumnSpan="2" TextAlignment="Center" Text="{Binding Path=MaxWaste, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="7" FontSize="18" Text="Доступная ширина: " />
+            <TextBlock Grid.Column="0" Grid.Row="4" TextAlignment="Center" VerticalAlignment="Center" Text="От:" />
+            <TextBox Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" TextAlignment="Center" Text="{Binding Path=LeftLimit, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+            <TextBlock Grid.Column="4" Grid.Row="4" TextAlignment="Center" VerticalAlignment="Center" Text="До:" />
+            <TextBox Grid.Column="5"  Grid.Row="4" Grid.ColumnSpan="2" TextAlignment="Center" Text="{Binding Path=RightLimit, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+        </Grid>
 
             <Button
                 Background="MediumPurple"

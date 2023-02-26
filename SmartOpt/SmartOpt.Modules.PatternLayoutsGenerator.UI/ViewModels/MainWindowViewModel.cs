@@ -1,8 +1,8 @@
-﻿using System.Windows.Input;
-using System.Windows.Media.Effects;
-using SmartOpt.Core.Infrastructure.Models;
+﻿using SmartOpt.Core.Infrastructure.Models;
 using SmartOpt.Modules.PatternLayoutsGenerator.UI.Services;
 using SmartOpt.Modules.PatternLayoutsGenerator.UI.ViewModels.Interfaces;
+using System.Windows.Input;
+using System.Windows.Media.Effects;
 
 namespace SmartOpt.Modules.PatternLayoutsGenerator.UI.ViewModels;
 
@@ -12,6 +12,8 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
     private int maxWidth = 6000;
     private double maxWaste = 1.4;
     private double minWaste = 0.8;
+    private double leftLimit = 5916;
+    private double rightLimit = 5952;
     private int groupSize = 5;
     private string workbookFilepath;
 
@@ -19,7 +21,7 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
 
     public MainWindowViewModel()
     {
-        availableWidth = new WidthRange(minWaste, maxWaste, maxWidth);
+        availableWidth = new WidthRange(minWaste, maxWaste, maxWidth, rightLimit, leftLimit);
         BusyIndicatorManager = BusyIndicatorManager.Instance;
     }
 
@@ -34,7 +36,7 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
             OnPropertyChanged(nameof(IsInteractionAllowed));
         }
     }
-    
+
     public int MaxWidth
     {
         get => maxWidth;
@@ -42,7 +44,7 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
         {
             maxWidth = value;
             OnPropertyChanged(nameof(MaxWidth));
-            UpdateWidthRange();
+            UpdateWidthRangeForWidth();
         }
     }
 
@@ -53,7 +55,7 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
         {
             minWaste = value;
             OnPropertyChanged(nameof(MinWaste));
-            UpdateWidthRange();
+            UpdateWidthRangeForWaste();
         }
     }
 
@@ -64,7 +66,29 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
         {
             maxWaste = value;
             OnPropertyChanged(nameof(MaxWaste));
-            UpdateWidthRange();
+            UpdateWidthRangeForWaste();
+        }
+    }
+
+    public double LeftLimit
+    {
+        get => leftLimit;
+        set
+        {
+            leftLimit = value;
+            OnPropertyChanged(nameof(LeftLimit));
+            UpdateWidthRangeForLimit();
+        }
+    }
+
+    public double RightLimit
+    {
+        get => rightLimit;
+        set
+        {
+            rightLimit = value;
+            OnPropertyChanged(nameof(RightLimit));
+            UpdateWidthRangeForLimit();
         }
     }
 
@@ -76,8 +100,8 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
             groupSize = value;
             OnPropertyChanged(nameof(GroupSize));
         }
-    }    
-    
+    }
+
     public string WorkbookFilename
     {
         get => workbookFilepath ?? "Не указано";
@@ -88,10 +112,19 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
         }
     }
 
-    private void UpdateWidthRange()
+    private void UpdateWidthRangeForWaste()
     {
-        availableWidth.SetNewRange(minWaste, maxWaste, maxWidth);
-        OnPropertyChanged(nameof(AvailableRange));
+        availableWidth.SetNewRangeForWaste(ref leftLimit, ref rightLimit, minWaste, maxWaste, maxWidth);
+    }
+
+    private void UpdateWidthRangeForLimit()
+    {
+        availableWidth.SetNewRangeForLimit(ref minWaste, ref maxWaste, leftLimit, rightLimit, maxWidth);
+    }
+
+    private void UpdateWidthRangeForWidth()
+    {
+        availableWidth.SetNewRangeForWidth(maxWidth, ref minWaste, ref maxWaste, ref leftLimit, ref rightLimit);
     }
 
     public ICommand GeneratePatternLayouts { get; set; } = null!;
@@ -100,6 +133,6 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
     public ICommand SelectWorkbookFilepath { get; set; } = null!;
 
     public BusyIndicatorManager BusyIndicatorManager { get; }
-    
+
     public Effect Effect { get; set; }
 }
