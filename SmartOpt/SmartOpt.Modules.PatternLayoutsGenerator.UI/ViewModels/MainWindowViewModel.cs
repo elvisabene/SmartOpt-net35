@@ -1,4 +1,5 @@
-﻿using SmartOpt.Core.Infrastructure.Models;
+﻿using System.Windows.Data;
+using SmartOpt.Core.Infrastructure.Models;
 using SmartOpt.Modules.PatternLayoutsGenerator.UI.Services;
 using SmartOpt.Modules.PatternLayoutsGenerator.UI.ViewModels.Interfaces;
 using System.Windows.Input;
@@ -23,6 +24,21 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
     {
         availableWidth = new WidthRange(minWaste, maxWaste, maxWidth, rightLimit, leftLimit);
         BusyIndicatorManager = BusyIndicatorManager.Instance;
+        
+        availableWidth.OnWasteChange += () =>
+        {
+            OnPropertyChanged(nameof(AvailableRange));
+        };
+        
+        availableWidth.OnLimitChange += () =>
+        {
+            OnPropertyChanged(nameof(AvailableRange));
+        };
+
+        availableWidth.OnWidthChange += () =>
+        {
+            OnPropertyChanged(nameof(AvailableRange));
+        };
     }
 
     public WidthRange AvailableRange => availableWidth;
@@ -34,61 +50,6 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
         {
             isInteractionAllowed = value;
             OnPropertyChanged(nameof(IsInteractionAllowed));
-        }
-    }
-
-    public int MaxWidth
-    {
-        get => maxWidth;
-        set
-        {
-            maxWidth = value;
-            OnPropertyChanged(nameof(MaxWidth));
-            UpdateWidthRangeForWidth();
-        }
-    }
-
-    public double MinWaste
-    {
-        get => minWaste;
-        set
-        {
-            minWaste = value;
-            OnPropertyChanged(nameof(MinWaste));
-            UpdateWidthRangeForWaste();
-        }
-    }
-
-    public double MaxWaste
-    {
-        get => maxWaste;
-        set
-        {
-            maxWaste = value;
-            OnPropertyChanged(nameof(MaxWaste));
-            UpdateWidthRangeForWaste();
-        }
-    }
-
-    public double LeftLimit
-    {
-        get => leftLimit;
-        set
-        {
-            leftLimit = value;
-            OnPropertyChanged(nameof(LeftLimit));
-            UpdateWidthRangeForLimit();
-        }
-    }
-
-    public double RightLimit
-    {
-        get => rightLimit;
-        set
-        {
-            rightLimit = value;
-            OnPropertyChanged(nameof(RightLimit));
-            UpdateWidthRangeForLimit();
         }
     }
 
@@ -110,21 +71,6 @@ public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
             workbookFilepath = value;
             OnPropertyChanged(nameof(WorkbookFilename));
         }
-    }
-
-    private void UpdateWidthRangeForWaste()
-    {
-        availableWidth.SetNewRangeForWaste(ref leftLimit, ref rightLimit, minWaste, maxWaste, maxWidth);
-    }
-
-    private void UpdateWidthRangeForLimit()
-    {
-        availableWidth.SetNewRangeForLimit(ref minWaste, ref maxWaste, leftLimit, rightLimit, maxWidth);
-    }
-
-    private void UpdateWidthRangeForWidth()
-    {
-        availableWidth.SetNewRangeForWidth(maxWidth, ref minWaste, ref maxWaste, ref leftLimit, ref rightLimit);
     }
 
     public ICommand GeneratePatternLayouts { get; set; } = null!;

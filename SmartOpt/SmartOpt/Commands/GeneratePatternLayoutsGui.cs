@@ -32,9 +32,9 @@ public partial class Application
         // ReSharper disable once AsyncVoidLambda
         viewModel.GeneratePatternLayouts = new RelayCommand(_ =>
             {
-                _applicationState.SetMaxWidth(viewModel, viewModel.MaxWidth);
-                _applicationState.SetMinWaste(viewModel, viewModel.MinWaste);
-                _applicationState.SetMaxWaste(viewModel, viewModel.MaxWaste);
+                _applicationState.SetMaxWidth(viewModel, viewModel.AvailableRange.Width);
+                _applicationState.SetMinWaste(viewModel, viewModel.AvailableRange.MinWastePercent);
+                _applicationState.SetMaxWaste(viewModel, viewModel.AvailableRange.MaxWastePercent);
                 _applicationState.SetGroupSize(viewModel, viewModel.GroupSize);
 
                 viewModel.BusyIndicatorManager.Show(1, "Обрабатываем...");
@@ -76,5 +76,5 @@ public partial class Application
     }
 
     private Func<object, bool> CanExecuteGeneratePattenLayoutsCommand(IMainWindowViewModel viewModel) =>
-        _ => viewModel.MaxWidth >= 0 && viewModel.MaxWaste > 0 && viewModel.GroupSize > 0;
+        _ => viewModel.AvailableRange.Width >= 0 && viewModel.AvailableRange.MinWastePercent > 0 && viewModel.GroupSize > 0;
 }

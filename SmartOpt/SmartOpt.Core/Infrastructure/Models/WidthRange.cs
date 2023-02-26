@@ -1,30 +1,97 @@
-﻿namespace SmartOpt.Core.Infrastructure.Models;
+﻿using System;
+
+namespace SmartOpt.Core.Infrastructure.Models;
 
 public class WidthRange
 {
-    public WidthRange(double minWaste, double maxWaste, double width, double rightLimit, double leftLimit)
+    private double minWastePercent;
+    private double maxWastePercent;
+    private double leftLimit;
+    private double rightLimit;
+    private int width;
+    
+    public event Action OnLimitChange;
+    public event Action OnWasteChange;
+    public event Action OnWidthChange; 
+    
+
+    public double MinWastePercent
     {
-        SetNewRangeForLimit(ref minWaste, ref maxWaste, leftLimit, rightLimit, width);
-        SetNewRangeForWaste(ref leftLimit, ref rightLimit, minWaste, maxWaste, width);
+        get => minWastePercent;
+        set
+        {
+            minWastePercent = value;
+            OnWasteChange();
+        }
     }
 
-    public void SetNewRangeForWaste(ref double leftLimit, ref double rightLimit, double minWaste, double maxWaste, double width)
+    public double MaxWastePercent
     {
-        leftLimit = width - width * maxWaste / 100;
-        rightLimit = width - width * minWaste / 100;
+        get => maxWastePercent;
+        set
+        {
+            maxWastePercent = value;
+            OnWasteChange();
+        }
     }
 
-    public void SetNewRangeForLimit(ref double minWaste, ref double maxWaste, double leftLimit, double rightLimit, double width)
+    public double LeftLimit
     {
-        minWaste = (width - leftLimit) * 100 / width;
-        maxWaste = (width - rightLimit) * 100 / width;
+        get => leftLimit;
+        set
+        {
+            leftLimit = value;
+            OnLimitChange();
+        }
     }
 
-    public void SetNewRangeForWidth(double width, ref double minWaste, ref double maxWaste, ref double leftLimit, ref double rightLimit)
+    public double RightLimit
     {
-        minWaste = 0;
-        maxWaste = 1;
-        leftLimit = width - width * maxWaste / 100;
-        rightLimit = width - width * minWaste / 100;
+        get => rightLimit;
+        set
+        {
+            rightLimit = value;
+            OnLimitChange();
+        }
+    }
+
+    public int Width
+    {
+        get => width;
+        set
+        {
+            width = value;
+            OnWidthChange();
+        }
+    }
+
+    public WidthRange(double minWaste, double maxWaste, int width, double rightLimit, double leftLimit)
+    {
+        minWastePercent = minWaste;
+        maxWastePercent = maxWaste;
+        this.leftLimit = leftLimit;
+        this.rightLimit = rightLimit;
+        this.width = width;
+        OnLimitChange += SetNewRangeForWaste;
+        OnWasteChange += SetNewRangeForLimit;
+        OnWidthChange += SetNewRangeForWidth;
+    }
+
+    private void SetNewRangeForLimit()
+    {
+        leftLimit = width - width * maxWastePercent / 100;
+        rightLimit = width - width * minWastePercent / 100;
+    }
+
+    private void SetNewRangeForWaste()
+    {
+        minWastePercent = (width - leftLimit) * 100 / width;
+        maxWastePercent = (width - rightLimit) * 100 / width;
+    }
+
+    private void SetNewRangeForWidth()
+    {
+        leftLimit = width - width * maxWastePercent / 100;
+        rightLimit = width - width * minWastePercent / 100;
     }
 }
