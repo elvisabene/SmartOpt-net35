@@ -6,7 +6,7 @@
         xmlns:viewModels="clr-namespace:SmartOpt.Modules.PatternLayoutsGenerator.UI.ViewModels"
         mc:Ignorable="d"
         Title="SmartOpt"
-        Height="620" Width="400"
+        Height="720" Width="400"
         ResizeMode="NoResize"
         Effect="{Binding Path=Effect}"
 
@@ -87,7 +87,7 @@
             <TextBox
                     x:Name="WidthTextBox"
                     MaxLength="4"
-                    Text="{Binding MaxWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    Text="{Binding AvailableRange.Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             </TextBox>
 
             <Slider
@@ -170,11 +170,27 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center" Text="От:" />
-                <TextBox Grid.Column="1" Grid.ColumnSpan="2" TextAlignment="Center" Text="{Binding MinWaste}" />
-                <TextBlock Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center" Text="До:" />
-                <TextBox Grid.Column="5" Grid.ColumnSpan="2" TextAlignment="Center" Text="{Binding MaxWaste}" />
-            </Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="7" TextAlignment="Left" FontSize="18" VerticalAlignment="Center" Text="Допустимый процент отходов:" />
+            <TextBlock Grid.Column="0" Grid.Row="1" TextAlignment="Center" VerticalAlignment="Center" Text="От:" />
+            <TextBox Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" TextAlignment="Center" Text="{Binding Path=AvailableRange.MinWastePercent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Grid.Column="4" Grid.Row="1" TextAlignment="Center" VerticalAlignment="Center" Text="До:" />
+            <TextBox Grid.Column="5"  Grid.Row="1" Grid.ColumnSpan="2" TextAlignment="Center" Text="{Binding Path=AvailableRange.MaxWastePercent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="7" FontSize="18" Text="Доступная ширина: " />
+            <TextBlock Grid.Column="0" Grid.Row="3" TextAlignment="Center" VerticalAlignment="Center" Text="От:" />
+            <TextBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" TextAlignment="Center" Text="{Binding Path=AvailableRange.LeftLimit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Grid.Column="4" Grid.Row="3" TextAlignment="Center" VerticalAlignment="Center" Text="До:" />
+            <TextBox Grid.Column="5"  Grid.Row="3" Grid.ColumnSpan="2" TextAlignment="Center" Text="{Binding Path=AvailableRange.RightLimit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="7" FontSize="18" Text="Коэффицент: " />
+            <TextBox Grid.Column="0"  Grid.Row="5" Grid.ColumnSpan="2" TextAlignment="Left" Text="{Binding Path=AvailableRange.Coefficient, Mode=TwoWay}"/>
+        </Grid>
 
             <Button
                 Background="MediumPurple"

@@ -5,9 +5,9 @@ namespace SmartOpt.Modules.PatternLayoutsGenerator.Services.Abstractions.Interfa
 {
     public interface IOrderInfoParser
     {
-        IEnumerable<OrderInfo> ParseOrdersFromActiveExcelWorksheet();
+        IEnumerable<OrderInfo> ParseOrdersFromActiveExcelWorksheet(double coefficient);
 
         // todo add worksheetId parameter. by default this method uses 0
-        IEnumerable<OrderInfo> ParseOrdersFromExcelWorksheet(string workbookFilepath);
+        IEnumerable<OrderInfo> ParseOrdersFromExcelWorksheet(string workbookFilepath, double coefficient);
     }
 }

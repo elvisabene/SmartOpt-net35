@@ -10,8 +10,10 @@ namespace SmartOpt.Modules.PatternLayoutsGenerator.Services.Abstractions.Interfa
         /// <param name="maxWidth">Width limit</param>
         /// <param name="maxWaste">Waste limit</param>
         /// <param name="groupSize">Group size</param>
+        /// <param name="coefficient">Coefficient</param>
+
         /// <returns>Report that contains generated pattern layouts</returns>
-        Report GeneratePatternLayoutsFromActiveExcelWorksheet(int maxWidth, double minWaste, double maxWaste, int groupSize);
+        Report GeneratePatternLayoutsFromActiveExcelWorksheet(int maxWidth, double minWaste, double maxWaste, int groupSize, double coefficient);
 
         // todo add worksheet id parameter
         /// <summary>
@@ -21,7 +23,8 @@ namespace SmartOpt.Modules.PatternLayoutsGenerator.Services.Abstractions.Interfa
         /// <param name="maxWidth">Width limit</param>
         /// <param name="maxWaste">Waste limit</param>
         /// <param name="groupSize">Group size</param>
+        /// <param name="coefficient">Coefficient</param>
         /// <returns>Report that contains generated pattern layouts</returns>
-        Report GeneratePatternLayoutsFromExcelWorksheet(string workbookFilepath, int maxWidth, double minWaste, double maxWaste, int groupSize);
+        Report GeneratePatternLayoutsFromExcelWorksheet(string workbookFilepath, int maxWidth, double minWaste, double maxWaste, int groupSize, double coefficient);
     }
 }

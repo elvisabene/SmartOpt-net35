@@ -1,10 +1,15 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CELViS_005CUniver_002Dlocal_005CSmartOpt_002Dnet35_005CSmartOpt_005Cpackages_005CNPOI_002EExcel_002E2_002E1_002E1_005Clib_005CICSharpCode_002ESharpZipLib_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CELViS_005CUniver_002Dlocal_005CSmartOpt_002Dnet35_005CSmartOpt_005Cpackages_005CNPOI_002EExcel_002E2_002E1_002E1_005Clib_005CNPOI_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CELViS_005CUniver_002Dlocal_005CSmartOpt_002Dnet35_005CSmartOpt_005Cpackages_005CNPOI_002EExcel_002E2_002E1_002E1_005Clib_005CNPOI_002EOOXML_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CELViS_005CUniver_002Dlocal_005CSmartOpt_002Dnet35_005CSmartOpt_005Cpackages_005CNPOI_002EExcel_002E2_002E1_002E1_005Clib_005CNPOI_002EOpenXml4Net_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005CELViS_005CUniver_002Dlocal_005CSmartOpt_002Dnet35_005CSmartOpt_005Cpackages_005CNPOI_002EExcel_002E2_002E1_002E1_005Clib_005CNPOI_002EOpenXmlFormats_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1a3018a5_002D2640_002D47de_002D833d_002D255051ec45d2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreatePatternLayoutsFromOrders_WhenNothingSpecialHappens_ReturnsResult" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::33C5000D-806D-4B70-84A4-6D176F10709F::.NETFramework,Version=v3.5::SmartOpt.Modules.PatternLayoutsGenerator.Tests.PatternLayoutServiceTests.CreatePatternLayoutsFromOrders_WhenNothingSpecialHappens_ReturnsResult&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=48004390_002D8502_002D4d5a_002Daf34_002Da9ef0ee42d64/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="PatternLayoutServiceTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=48004390_002D8502_002D4d5a_002Daf34_002Da9ef0ee42d64/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="PatternLayoutServiceTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::33C5000D-806D-4B70-84A4-6D176F10709F::.NETFramework,Version=v3.5::SmartOpt.Modules.PatternLayoutsGenerator.Tests.PatternLayoutServiceTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
