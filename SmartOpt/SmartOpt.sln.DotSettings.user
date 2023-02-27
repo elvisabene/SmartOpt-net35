@@ -9,7 +9,7 @@
     &lt;TestId&gt;NUnit3x::33C5000D-806D-4B70-84A4-6D176F10709F::.NETFramework,Version=v3.5::SmartOpt.Modules.PatternLayoutsGenerator.Tests.PatternLayoutServiceTests.CreatePatternLayoutsFromOrders_WhenNothingSpecialHappens_ReturnsResult&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=48004390_002D8502_002D4d5a_002Daf34_002Da9ef0ee42d64/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="PatternLayoutServiceTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=48004390_002D8502_002D4d5a_002Daf34_002Da9ef0ee42d64/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="PatternLayoutServiceTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::33C5000D-806D-4B70-84A4-6D176F10709F::.NETFramework,Version=v3.5::SmartOpt.Modules.PatternLayoutsGenerator.Tests.PatternLayoutServiceTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;

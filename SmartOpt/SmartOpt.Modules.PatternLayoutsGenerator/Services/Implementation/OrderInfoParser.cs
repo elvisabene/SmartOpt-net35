@@ -11,8 +11,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Aspose.Cells;
-using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
 using Workbook = Microsoft.Office.Interop.Excel.Workbook;
 
 namespace SmartOpt.Modules.PatternLayoutsGenerator.Services.Implementation
@@ -49,8 +47,6 @@ namespace SmartOpt.Modules.PatternLayoutsGenerator.Services.Implementation
 
             try
             {
-                //ChangeFormula(workbookFilepath, coefficient);
-
                 File.Copy(workbookFilepath, tempFilepath, true);
 
                 using var workbook = new XLWorkbook(tempFilepath);
@@ -87,80 +83,6 @@ namespace SmartOpt.Modules.PatternLayoutsGenerator.Services.Implementation
                     tempFile.Delete();
                 }
             }
-        }
-
-        private void ChangeFormula(string filePath, double coefficient)
-        {
-            // !!! CANNOT GET WORKSHEET !!!
-            
-            // var excel = new Application();
-            // var workbook = excel.Workbooks.Open(filePath);
-            // var worksheet = workbook.Worksheets["2019"];
-            
-
-            // !!! CORRUPTED SAVING !!!
-            
-            // using var workbook = new XLWorkbook(filePath);
-            // var worksheet = workbook.Worksheets.First();
-            // var column = worksheet.Column(14);
-            // column.FormulaR1C1 = $"=(RC[-10]-RC[-9])/(RC[-1]*{coefficient})";
-            // workbook.SaveAs($"Orders-{Guid.NewGuid()}.xlsm");
-            
-
-            // !!! Doesnt works ???
-            
-            //var existingFile = new FileInfo(filePath);
-
-            // using (ExcelPackage package = new ExcelPackage(existingFile))
-            // {
-            //     //get the first worksheet in the workbook
-            //     ExcelWorksheet worksheet = package.Workbook.Worksheets;
-            //     var column = worksheet.Cells.Address;
-            //     column.FormulaR1C1 = $"=(RC[-10]-RC[-9])/(RC[-1]*{coefficient})";
-            //     package.Save();
-            // }
-
-            
-            // !!! License required for Aspose cells !!!
-
-            // var workbook = new AC.Workbook(filePath);
-            // var worksheet = workbook.Worksheets[1];
-            // var columnNumber = 14;
-            //
-            // var column = worksheet.Cells.Columns[columnNumber];
-            // var range = worksheet.Cells.CreateRange(0, columnNumber, worksheet.Cells.Rows.Count, 1);
-            //
-            // for (var i = range.FirstRow; i <= range.RowCount; i++)
-            // {
-            //     var cell = worksheet.Cells[i, columnNumber];
-            //     cell.Formula = "=1";
-            // }
-            //
-            // workbook.Save("neworders.xlsm");
-            
-
-            var file = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite);
-            var workbook = new XSSFWorkbook(file);
-            var sheet = workbook.GetSheet("2019");
-            var columnIndex = 14;
-            
-            ICell cell;
-            for (var i = 0; i <= sheet.LastRowNum; i++)
-            {
-                var row = sheet.GetRow(i);
-            
-                if (row is not null)
-                {
-                    cell = row.GetCell(columnIndex);
-
-                    cell?.SetCellFormula("SUM(D331:D332)");
-                }
-            }
-            
-            file.Close();
-            var output = new FileStream("output.xlsm", FileMode.Create, FileAccess.Write);
-            workbook.Write(output);
-            output.Close();
         }
 
         /// <summary>
