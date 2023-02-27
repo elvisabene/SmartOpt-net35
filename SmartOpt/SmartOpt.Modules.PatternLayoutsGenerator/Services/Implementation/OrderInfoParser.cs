@@ -54,18 +54,19 @@ namespace SmartOpt.Modules.PatternLayoutsGenerator.Services.Implementation
                 File.Copy(workbookFilepath, tempFilepath, true);
 
                 using var workbook = new XLWorkbook(tempFilepath);
-                IXLWorksheet worksheet = workbook.Worksheets.First();
+                var worksheet = workbook.Worksheets.First();
                 //var column = worksheet.Column(14);
                 //column.FormulaR1C1 = $"=(RC[-10]-RC[-9])/(RC[-1]*{coefficient})";
                 //workbook.Save();
                 var nameColumnValues = ParseColumn<string>(worksheet, 1, 3);
-                var widthColumnValues = ParseColumn<int>(worksheet, 3, 3);
+                var widthColumnValues = ParseColumn<int>(worksheet, 13, 3);
                 // IReadOnlyList<int> requestKilosColumnValues = ParseColumn<int>(worksheet, 4, 3);
                 // IReadOnlyList<double> doneKilosColumnValues = ParseColumn<double>(worksheet, 5, 3);
                 // IReadOnlyList<int> unknownValuesColumnValues = ParseColumn<int>(worksheet, 13, 3);
-                var countColumnValues = ParseColumn<double>(worksheet, 14, 3);
+                var countColumnValues = ParseColumn<double>(worksheet, 14, 3)
+                    .Select(x => x * 0.17 / coefficient);
 
-                OrderInfo[] orders = nameColumnValues.Select((name, i) =>
+                var orders = nameColumnValues.Select((name, i) =>
                     new OrderInfo(
                         name,
                         widthColumnValues.ElementAt(i),

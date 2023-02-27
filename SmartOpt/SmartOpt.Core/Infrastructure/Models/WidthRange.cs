@@ -96,8 +96,8 @@ public class WidthRange
 
     private void SetNewRangeForWaste()
     {
-        minWastePercent = (width - leftLimit) * 100 / width;
-        maxWastePercent = (width - rightLimit) * 100 / width;
+        minWastePercent = (width - rightLimit) * 100 / width;
+        maxWastePercent = (width - leftLimit) * 100 / width;
     }
 
     private void SetNewRangeForWidth()
