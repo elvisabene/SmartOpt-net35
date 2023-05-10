@@ -102,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PatternLayoutGeneratorModule.cs" />
+    <Compile Include="Services\Abstractions\Models\IdenticalOrdersGroup.cs" />
     <Compile Include="Services\Implementation\OrderInfoParser.cs" />
     <Compile Include="Services\Implementation\PatternLayoutGenerator.cs" />
     <Compile Include="Services\Implementation\PatternLayoutService.cs" />
