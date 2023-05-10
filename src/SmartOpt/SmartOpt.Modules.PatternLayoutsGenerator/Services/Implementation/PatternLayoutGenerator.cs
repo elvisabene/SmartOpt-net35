@@ -34,9 +34,9 @@ namespace SmartOpt.Modules.PatternLayoutsGenerator.Services.Implementation
 
                 var ordersGroup = allOrders.GetRange(0, groupSize);
                 var ungroupedOrders = allOrders.GetRange(groupSize, allOrders.Count - groupSize);
-
+ 
                 if (TryCreatePatternLayout(
-                        allOrders, 
+                        allOrders,
                         ungroupedOrders,
                         ordersGroup,
                         minWaste, maxWaste, maxWidth,
@@ -44,7 +44,24 @@ namespace SmartOpt.Modules.PatternLayoutsGenerator.Services.Implementation
                         out elementsForGroupingExist))
                 {
                     allOrders = MergeSplitOrders(allOrders);
-                    AddPatternLayoutToReport(report, patternLayout);
+                    report.AddPatternLayout(patternLayout);
+                }
+
+                if (!elementsForGroupingExist)
+                {
+                    var indices = new List<int>();
+
+                    for (var i = 0; i < allOrders.Count(); i++)
+                    {
+                        if (allOrders[i].RollsCount > 6)
+                        {
+                            indices.Add(i);
+                        }
+                    }
+
+                    indices.ForEach(x => SplitOrderIntoTwo(allOrders, x));
+                    
+                    elementsForGroupingExist = indices.Any();
                 }
             }
 
@@ -53,15 +70,10 @@ namespace SmartOpt.Modules.PatternLayoutsGenerator.Services.Implementation
             return report;
         }
 
-        private static void AddPatternLayoutToReport(Report report, PatternLayout patternLayout)
-        {
-            report.AddPatternLayout(patternLayout);
-        }
-
         private static void AddRemainingOrdersToReport(Report report, List<OrderInfo> remainingOrders)
         {
             // Implementation details. CreatePatternLayout method is "subtracting rolls count from the remaining orders"
-            var patternLayout = CreatePatternLayout(remainingOrders, 100.0);
+            var patternLayout = PatternLayout.Create(remainingOrders, 100.0);
             report.AddUngroupedOrders(patternLayout.Orders);
         }
 
@@ -117,21 +129,8 @@ namespace SmartOpt.Modules.PatternLayoutsGenerator.Services.Implementation
                 }
             }
 
-            patternLayout = CreatePatternLayout(ordersGroup, groupWaste);
+            patternLayout = PatternLayout.Create(ordersGroup, groupWaste);
             return true;
-        }
-
-        private static PatternLayout CreatePatternLayout(List<OrderInfo> orders, double waste)
-        {
-            var minGroupRollsCount = orders.Min(x => x.RollsCount);
-            var ordersGroup = new List<OrderInfo>();
-            orders.ForEach(order =>
-            {
-                ordersGroup.Add(order.Clone());
-                order.RollsCount -= minGroupRollsCount;
-            });
-
-            return new PatternLayout(ordersGroup, minGroupRollsCount, waste);
         }
 
         private static List<OrderInfo> MergeSplitOrders(IEnumerable<OrderInfo> splitOrders)
@@ -202,23 +201,32 @@ namespace SmartOpt.Modules.PatternLayoutsGenerator.Services.Implementation
         private static IEnumerable<OrderInfo> AggregateOrdersWithIdenticalWidth(IEnumerable<OrderInfo> orders)
         {
             var ordersArray = orders as OrderInfo[] ?? orders.ToArray();
-            
-            var elementWidths = ordersArray
-                .Select(x => x.Width)
-                .Distinct();
 
-            var a = elementWidths
-                .Select(currentWidth => ordersArray.Where(x => x.Width == currentWidth));
+            // var elementWidths = ordersArray
+            //     .Select(x => x.Width)
+            //     .Distinct();
+            //
+            // var a = elementWidths
+            //     .Select(currentWidth => ordersArray.Where(x => x.Width == currentWidth));
+            //
+            // var b = a.Select(tmp => tmp.Aggregate((prev, next) =>
+            //     {
+            //         prev.Name += ", " + next.Name;
+            //         prev.RollsCount += next.RollsCount;
+            //         
+            //         return prev;
+            //     })); 
+            //
+            // return b;
             
-            var b = a.Select(tmp => tmp.Aggregate((prev, next) =>
-                {
-                    prev.Name += ", " + next.Name;
-                    prev.RollsCount += next.RollsCount;
-                    
-                    return prev;
-                }));
+            var resultOrders = new List<OrderInfo>();
 
-            return b;
+            ordersArray.GroupBy(x => x.Width).ForEach(x =>
+            {
+                resultOrders.Add(x.Count() > 1 ? IdenticalOrdersGroup.FromOrders(x) : x.Single());
+            });
+
+            return resultOrders;
         }
 
         private static void RemoveOldWaste(IList wasteHistory)
